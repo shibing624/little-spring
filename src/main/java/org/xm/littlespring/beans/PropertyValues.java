@@ -7,7 +7,7 @@ import java.util.List;
  * @author xuming
  */
 public class PropertyValues {
-    private final List<PropertyValue> propertyValueList = new ArrayList<>();
+    private final List<PropertyValue> propertyValueList = new ArrayList<PropertyValue>();
     public PropertyValues(){
 
     }

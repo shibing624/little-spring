@@ -13,9 +13,9 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author xuming
  */
 public abstract class AbstractBeanFactory implements BeanFactory {
-    private Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
-    private final List<String> beanDefinitionNames = new ArrayList<>();
-    private List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
+    private Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<String, BeanDefinition>();
+    private final List<String> beanDefinitionNames = new ArrayList<String>();
+    private List<BeanPostProcessor> beanPostProcessors = new ArrayList<BeanPostProcessor>();
 
     @Override
     public Object getBean(String name) throws Exception {
@@ -61,9 +61,8 @@ public abstract class AbstractBeanFactory implements BeanFactory {
         beanDefinitionMap.put(name, beanDefinition);
         beanDefinitionNames.add(name);
     }
-
-    public void preInstantisteSingletons() throws Exception {
-        for (Iterator it = this.beanDefinitionNames.iterator(); it.hasNext(); ) {
+    public void preInstantiateSingletons() throws Exception {
+        for (Iterator it = this.beanDefinitionNames.iterator(); it.hasNext();) {
             String beanName = (String) it.next();
             getBean(beanName);
         }
@@ -71,5 +70,14 @@ public abstract class AbstractBeanFactory implements BeanFactory {
 
     public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) throws Exception {
         this.beanPostProcessors.add(beanPostProcessor);
+    }
+    public List getBeansForType(Class type) throws Exception{
+        List beans = new ArrayList<Object>();
+        for(String beanDefinitionName :beanDefinitionNames){
+            if(type.isAssignableFrom(beanDefinitionMap.get(beanDefinitionName).getBeanClass())){
+                beans.add(getBean(beanDefinitionName));
+            }
+        }
+        return beans;
     }
 }

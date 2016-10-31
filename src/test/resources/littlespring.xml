@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans >
+
+    <bean id="outputService" class="org.xm.littlespring.OutputServiceImpl">
+    </bean>
+
+    <bean id="helloWorldService" class="org.xm.littlespring.HelloWorldServiceImpl">
+        <property name="text" value="Hello World!你好世界。 shibing624 littlespring.xml"></property>
+        <property name="outputService" ref="outputService"></property>
+    </bean>
+
+    <bean id="autoProxyCreator" class="org.xm.littlespring.aop.AspectJAwareAdvisorAutoProxyCreator"></bean>
+
+    <bean id="timeInterceptor" class="org.xm.littlespring.aop.TimerInterceptor"></bean>
+
+    <bean id="aspectjAspect" class="org.xm.littlespring.aop.AspectJExpressionPointcutAdvisor">
+        <property name="advice" ref="timeInterceptor"></property>
+        <property name="expression" value="execution(* org.xm.littlespring.*.*(..))"></property>
+    </bean>
+
+</beans>

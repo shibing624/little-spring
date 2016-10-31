@@ -13,7 +13,7 @@ public abstract class AbstractBeanDefinitionReader  implements BeanDefinitionRea
     private Map<String,BeanDefinition> registry;
     private ResourceLoader resourceLoader;
     protected AbstractBeanDefinitionReader(ResourceLoader resourceLoader){
-        this.registry = new HashMap<>();
+        this.registry = new HashMap<String,BeanDefinition>();
         this.resourceLoader = resourceLoader;
     }
     public Map<String,BeanDefinition> getRegistry(){
